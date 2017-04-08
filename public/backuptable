@@ -1,0 +1,8 @@
+CREATE TABLE `weatherdb`.`conditions` (
+  `title` varchar(120) NOT NULL, 
+  `lat` float(8,6) DEFAULT NULL, 
+  `lon` float(8,6) DEFAULT NULL, 
+  `time` datetime DEFAULT NULL, 
+  `data` text DEFAULT NULL, 
+PRIMARY KEY `PRIMARY` (`title`)
+) ENGINE=InnoDB;

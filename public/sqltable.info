@@ -1,0 +1,8 @@
+CREATE TABLE conditions (
+title VARCHAR(40) ,
+lat FLOAT(2,6) ,
+lon FLOAT(2,6) ,
+time DATETIME ,
+data TEXT ,
+CONSTRAINT PRIMARY KEY(title)
+);
