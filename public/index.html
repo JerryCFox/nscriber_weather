@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      html, body, #map-canvas {
+        height: 100%;
+        margin: 0px;
+        padding: 0px
+      }
+    </style>
+    <script src="jquery-2.1.4.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+    <script src="markerwithlabel.js"></script>
+    <link rel="stylesheet" href="./css/weather-icons.min.css">
+    <script>
+      var tiles=[{"lon":-66,"lat":47},{"lon":-66,"lat":45},{"lon":-68,"lat":47},{"lon":-68,"lat":45},{"lon":-70,"lat":47},{"lon":-70,"lat":45},{"lon":-72,"lat":47},{"lon":-72,"lat":45},{"lon":-72,"lat":43},{"lon":-72,"lat":41},{"lon":-74,"lat":47},{"lon":-74,"lat":45},{"lon":-74,"lat":43},{"lon":-74,"lat":41},{"lon":-76,"lat":43},{"lon":-76,"lat":41},{"lon":-76,"lat":39},{"lon":-76,"lat":37},{"lon":-76,"lat":35},{"lon":-76,"lat":33},{"lon":-78,"lat":43},{"lon":-78,"lat":41},{"lon":-78,"lat":39},{"lon":-78,"lat":37},{"lon":-78,"lat":35},{"lon":-78,"lat":33},{"lon":-80,"lat":43},{"lon":-80,"lat":41},{"lon":-80,"lat":39},{"lon":-80,"lat":37},{"lon":-80,"lat":35},{"lon":-80,"lat":33},{"lon":-80,"lat":31},{"lon":-80,"lat":29},{"lon":-80,"lat":27},{"lon":-80,"lat":25},{"lon":-82,"lat":47},{"lon":-82,"lat":45},{"lon":-82,"lat":43},{"lon":-82,"lat":41},{"lon":-82,"lat":39},{"lon":-82,"lat":37},{"lon":-82,"lat":35},{"lon":-82,"lat":33},{"lon":-82,"lat":31},{"lon":-82,"lat":29},{"lon":-82,"lat":27},{"lon":-82,"lat":25},{"lon":-84,"lat":47},{"lon":-84,"lat":45},{"lon":-84,"lat":43},{"lon":-84,"lat":41},{"lon":-84,"lat":39},{"lon":-84,"lat":37},{"lon":-84,"lat":35},{"lon":-84,"lat":33},{"lon":-84,"lat":31},{"lon":-84,"lat":29},{"lon":-86,"lat":49},{"lon":-86,"lat":47},{"lon":-86,"lat":45},{"lon":-86,"lat":43},{"lon":-86,"lat":41},{"lon":-86,"lat":39},{"lon":-86,"lat":37},{"lon":-86,"lat":35},{"lon":-86,"lat":33},{"lon":-86,"lat":31},{"lon":-86,"lat":29},{"lon":-88,"lat":49},{"lon":-88,"lat":47},{"lon":-88,"lat":45},{"lon":-88,"lat":43},{"lon":-88,"lat":41},{"lon":-88,"lat":39},{"lon":-88,"lat":37},{"lon":-88,"lat":35},{"lon":-88,"lat":33},{"lon":-88,"lat":31},{"lon":-88,"lat":29},{"lon":-90,"lat":49},{"lon":-90,"lat":47},{"lon":-90,"lat":45},{"lon":-90,"lat":43},{"lon":-90,"lat":41},{"lon":-90,"lat":39},{"lon":-90,"lat":37},{"lon":-90,"lat":35},{"lon":-90,"lat":33},{"lon":-90,"lat":31},{"lon":-90,"lat":29},{"lon":-92,"lat":49},{"lon":-92,"lat":47},{"lon":-92,"lat":45},{"lon":-92,"lat":43},{"lon":-92,"lat":41},{"lon":-92,"lat":39},{"lon":-92,"lat":37},{"lon":-92,"lat":35},{"lon":-92,"lat":33},{"lon":-92,"lat":31},{"lon":-92,"lat":29},{"lon":-94,"lat":49},{"lon":-94,"lat":47},{"lon":-94,"lat":45},{"lon":-94,"lat":43},{"lon":-94,"lat":41},{"lon":-94,"lat":39},{"lon":-94,"lat":37},{"lon":-94,"lat":35},{"lon":-94,"lat":33},{"lon":-94,"lat":31},{"lon":-94,"lat":29},{"lon":-96,"lat":49},{"lon":-96,"lat":47},{"lon":-96,"lat":45},{"lon":-96,"lat":43},{"lon":-96,"lat":41},{"lon":-96,"lat":39},{"lon":-96,"lat":37},{"lon":-96,"lat":35},{"lon":-96,"lat":33},{"lon":-96,"lat":31},{"lon":-96,"lat":29},{"lon":-96,"lat":27},{"lon":-96,"lat":25},{"lon":-98,"lat":49},{"lon":-98,"lat":47},{"lon":-98,"lat":45},{"lon":-98,"lat":43},{"lon":-98,"lat":41},{"lon":-98,"lat":39},{"lon":-98,"lat":37},{"lon":-98,"lat":35},{"lon":-98,"lat":33},{"lon":-98,"lat":31},{"lon":-98,"lat":29},{"lon":-98,"lat":27},{"lon":-98,"lat":25},{"lon":-100,"lat":49},{"lon":-100,"lat":47},{"lon":-100,"lat":45},{"lon":-100,"lat":43},{"lon":-100,"lat":41},{"lon":-100,"lat":39},{"lon":-100,"lat":37},{"lon":-100,"lat":35},{"lon":-100,"lat":33},{"lon":-100,"lat":31},{"lon":-100,"lat":29},{"lon":-102,"lat":49},{"lon":-102,"lat":47},{"lon":-102,"lat":45},{"lon":-102,"lat":43},{"lon":-102,"lat":41},{"lon":-102,"lat":39},{"lon":-102,"lat":37},{"lon":-102,"lat":35},{"lon":-102,"lat":33},{"lon":-102,"lat":31},{"lon":-102,"lat":29},{"lon":-104,"lat":49},{"lon":-104,"lat":47},{"lon":-104,"lat":45},{"lon":-104,"lat":43},{"lon":-104,"lat":41},{"lon":-104,"lat":39},{"lon":-104,"lat":37},{"lon":-104,"lat":35},{"lon":-104,"lat":33},{"lon":-104,"lat":31},{"lon":-104,"lat":29},{"lon":-106,"lat":49},{"lon":-106,"lat":47},{"lon":-106,"lat":45},{"lon":-106,"lat":43},{"lon":-106,"lat":41},{"lon":-106,"lat":39},{"lon":-106,"lat":37},{"lon":-106,"lat":35},{"lon":-106,"lat":33},{"lon":-106,"lat":31},{"lon":-108,"lat":49},{"lon":-108,"lat":47},{"lon":-108,"lat":45},{"lon":-108,"lat":43},{"lon":-108,"lat":41},{"lon":-108,"lat":39},{"lon":-108,"lat":37},{"lon":-108,"lat":35},{"lon":-108,"lat":33},{"lon":-108,"lat":31},{"lon":-110,"lat":49},{"lon":-110,"lat":47},{"lon":-110,"lat":45},{"lon":-110,"lat":43},{"lon":-110,"lat":41},{"lon":-110,"lat":39},{"lon":-110,"lat":37},{"lon":-110,"lat":35},{"lon":-110,"lat":33},{"lon":-112,"lat":49},{"lon":-112,"lat":47},{"lon":-112,"lat":45},{"lon":-112,"lat":43},{"lon":-112,"lat":41},{"lon":-112,"lat":39},{"lon":-112,"lat":37},{"lon":-112,"lat":35},{"lon":-112,"lat":33},{"lon":-114,"lat":49},{"lon":-114,"lat":47},{"lon":-114,"lat":45},{"lon":-114,"lat":43},{"lon":-114,"lat":41},{"lon":-114,"lat":39},{"lon":-114,"lat":37},{"lon":-114,"lat":35},{"lon":-114,"lat":33},{"lon":-116,"lat":49},{"lon":-116,"lat":47},{"lon":-116,"lat":45},{"lon":-116,"lat":43},{"lon":-116,"lat":41},{"lon":-116,"lat":39},{"lon":-116,"lat":37},{"lon":-116,"lat":35},{"lon":-116,"lat":33},{"lon":-118,"lat":49},{"lon":-118,"lat":47},{"lon":-118,"lat":45},{"lon":-118,"lat":43},{"lon":-118,"lat":41},{"lon":-118,"lat":39},{"lon":-118,"lat":37},{"lon":-118,"lat":35},{"lon":-120,"lat":49},{"lon":-120,"lat":47},{"lon":-120,"lat":45},{"lon":-120,"lat":43},{"lon":-120,"lat":41},{"lon":-120,"lat":39},{"lon":-120,"lat":37},{"lon":-120,"lat":35},{"lon":-122,"lat":49},{"lon":-122,"lat":47},{"lon":-122,"lat":45},{"lon":-122,"lat":43},{"lon":-122,"lat":41},{"lon":-122,"lat":39},{"lon":-122,"lat":37},{"lon":-124,"lat":49},{"lon":-124,"lat":47},{"lon":-124,"lat":45},{"lon":-124,"lat":43},{"lon":-124,"lat":41},{"lon":-124,"lat":39},{"lon":-124,"lat":37},{"lon":-126,"lat":49},{"lon":-126,"lat":47},{"lon":-126,"lat":45},{"lon":-126,"lat":43},{"lon":-126,"lat":41},{"lon":-126,"lat":39},{"lon":-126,"lat":37}];
+      var rlat=[];
+      var rlon=[];
+      for(var i=0;i<tiles.length;i++){
+          rlat.push(tiles[i].lat);
+          rlon.push(tiles[i].lon);
+      }
+    </script>
+    <script>
+    
+var woverlay;
+var weatherOverlay;
+USGSOverlay.prototype=new google.maps.OverlayView();
+
+var orlando={};
+orlando.lat=28.4158;
+orlando.lon=-81.2989;
+
+var map;
+function initialize() {
+  var mapOptions = {
+    zoom: 6,
+    center: new google.maps.LatLng(orlando.lat, orlando.lon),
+    //mapTypeId: google.maps.MapTypeId.SATELLITE
+  };
+  map = new google.maps.Map(document.getElementById('map-canvas'),
+      mapOptions);
+      
+  
+ for(var i=0;i<rlon.length;i++){
+     var swBound = new google.maps.LatLng(rlat[i]-1, rlon[i]-1);
+      var neBound = new google.maps.LatLng(rlat[i]+1, rlon[i]+1);
+      var bounds = new google.maps.LatLngBounds(swBound, neBound);
+     srcImage="./radar"+rlat[i]+"_"+rlon[i]+"ltr.png";
+     woverlay = new USGSOverlay(bounds, srcImage, map);
+ }
+ 
+ 
+ $.post("weatherpull.php?lat="+orlando.lat+"&lon="+orlando.lon+"&rad=80")
+  .done(function( data ) {
+    console.log(data);
+    data=JSON.parse(data);
+    console.log(data);
+    conditions(data);
+  });
+}
+
+function conditions(data){
+  
+  markers=[];
+  infowindows=[];
+  for(var key=0;key<data.length;key++){
+    if(data[key].data!=null){
+      var cast=data[key].data.current_observation;
+      var weathercast="";
+      //weathercast+="<img src='"+cast.icon_url+"'></img>";
+      weathercast+=cast.observation_location.city;
+      weathercast+="</br>";
+      weathercast+="Currently: "+cast.weather+"</br>";
+      weathercast+="Temperature: "+cast.temperature_string+"</br>";
+      weathercast+="Wind: "+cast.wind_string+"</br>";
+      weathercast+="Visibility: "+cast.visibility_mi+" miles";
+      
+      
+     var icontype="wi-alien";
+     if(cast.weather=='Overcast'){
+       icontype='wi-cloudy';
+     };
+     if(cast.weather=='Mostly Cloudy'){
+       icontype='wi-cloudy';
+     };
+     if(cast.weather=='Partly Cloudy'){
+       icontype='wi-day-cloudy';
+     };
+     if(cast.weather=='Clear'){
+       icontype='wi-day-sunny';
+     }
+     if(cast.weather=='Rain'){
+       icontype='wi-rain';
+     }
+     if(cast.weather=='Scattered Clouds'){
+       icontype='wi-day-sunny-overcast';
+     }
+     if(cast.weather=='Light Drizzle'){
+       icontype='wi-day-rain';
+     }
+     if(cast.weather=='Haze'){
+       icontype='wi-day-haze';
+     }
+     if(cast.weather=='Light Rain'){
+       icontype='wi-day-showers';
+     }
+     if(cast.weather=='Fog'){
+       icontype='wi-fog';
+     }
+     if(cast.weather=='Snow'){
+       icontype='wi-snow';
+     }
+     if(cast.weather=='Light Snow'){
+       icontype='wi-snow';
+     }
+     if(cast.weather=='Thunderstorm'){
+       icontype='wi-thunderstorm';
+     }
+      
+      infowindows[key]=new google.maps.InfoWindow({
+          content: weathercast
+      });
+      
+      latlong=new google.maps.LatLng(data[key].data.current_observation.observation_location.latitude,data[key].data.current_observation.observation_location.longitude);
+      //alert("Hi");
+      markers[key]=new MarkerWithLabel({
+                         position: latlong,
+                         //draggable: true,
+                         //raiseOnDrag: true,
+                         icon: ' ',
+                         map: map,
+                           labelContent: '<i class="wi '+icontype+'" style="text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;padding:10%;font-size:250%;"></i>',
+                           labelAnchor: new google.maps.Point(20,50)
+                       });
+    
+    
+      //markers[key]=new google.maps.Marker({
+      //    position: latlong,
+      //    map: map,
+      //    title: 'Weather'
+      //});
+    
+    
+      google.maps.event.addListener(markers[key], 'click', function(innerKey) {
+          return function() {
+              infowindows[innerKey].open(map, markers[innerKey]);
+          }
+        }(key));
+    }
+      
+  }
+  
+  
+  
+  
+}
+
+
+
+
+
+
+
+
+google.maps.event.addDomListener(window, 'load', initialize);
+
+function USGSOverlay(bounds, image, map) {
+
+  // Initialize all properties.
+  this.bounds_ = bounds;
+  this.image_ = image;
+  this.map_ = map;
+
+  // Define a property to hold the image's div. We'll
+  // actually create this div upon receipt of the onAdd()
+  // method so we'll leave it null for now.
+  this.div_ = null;
+
+  // Explicitly call setMap on this overlay.
+  this.setMap(map);
+}
+
+USGSOverlay.prototype.onAdd = function() {
+
+  var div = document.createElement('div');
+  div.style.borderStyle = 'none';
+  div.style.borderWidth = '0px';
+  div.style.position = 'absolute';
+
+  // Create the img element and attach it to the div.
+  var img = document.createElement('img');
+  img.src = this.image_;
+  img.style.width = '100%';
+  img.style.height = '100%';
+  img.style.position = 'absolute';
+  div.appendChild(img);
+
+  this.div_ = div;
+
+  // Add the element to the "overlayLayer" pane.
+  var panes = this.getPanes();
+  panes.overlayLayer.appendChild(div);
+};
+
+USGSOverlay.prototype.draw = function() {
+
+  // We use the south-west and north-east
+  // coordinates of the overlay to peg it to the correct position and size.
+  // To do this, we need to retrieve the projection from the overlay.
+  var overlayProjection = this.getProjection();
+
+  // Retrieve the south-west and north-east coordinates of this overlay
+  // in LatLngs and convert them to pixel coordinates.
+  // We'll use these coordinates to resize the div.
+  var sw = overlayProjection.fromLatLngToDivPixel(this.bounds_.getSouthWest());
+  var ne = overlayProjection.fromLatLngToDivPixel(this.bounds_.getNorthEast());
+
+  // Resize the image's div to fit the indicated dimensions.
+  var div = this.div_;
+  div.style.left = sw.x + 'px';
+  div.style.top = ne.y + 'px';
+  div.style.width = (ne.x - sw.x) + 'px';
+  div.style.height = (sw.y - ne.y) + 'px';
+  div.style.opacity = 0.5;
+  //div.style['-webkit-filter'] = "blur(1px)";
+};
+
+// The onRemove() method will be called automatically from the API if
+// we ever set the overlay's map property to 'null'.
+USGSOverlay.prototype.onRemove = function() {
+  this.div_.parentNode.removeChild(this.div_);
+  this.div_ = null;
+};
+
+
+    </script>
+  </head>
+  <body>
+    <div id="map-canvas"></div>
+  </body>
+</html>
